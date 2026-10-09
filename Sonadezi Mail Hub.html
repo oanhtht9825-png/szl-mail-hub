@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sonadezi Mail Hub</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+[data-theme=brand-dark]{--hd:#0c111b;--ht:#fff;--hl:#1c2535;--sb:#111827;--st:#e8edf7;--bg:#0b0f17;--p:#0e1420;--p2:#0c121c;--t:#e8edf7;--m:#8e9ab0;--l:#1d2638;--a:#1d6bff;--at:#fff;--h:#151e2e;--sel:#102445;--chip:#182236;--logo:#fff}
+[data-theme=brand-blue]{--hd:#0b3a96;--ht:#fff;--hl:#0b3a96;--sb:#fff;--st:#1b2b46;--bg:#f4f7fc;--p:#fff;--p2:#f4f7fc;--t:#14233d;--m:#5f7089;--l:#dde5f1;--a:#1160e8;--at:#fff;--h:#eaf0fb;--sel:#e6effd;--chip:#e8f0fd;--logo:#fff}
+[data-theme=brand-soft]{--hd:#fff;--ht:#14233d;--hl:#e3e9f3;--sb:#f4f7fc;--st:#14233d;--bg:#f7f9fd;--p:#fff;--p2:#f7f9fd;--t:#14233d;--m:#62738c;--l:#e3e9f3;--a:#1a62e0;--at:#fff;--h:#eef3fb;--sel:#e9f1ff;--chip:#eaf1fd;--logo:#0D4794}
+[data-theme=mono-light]{--hd:#fff;--ht:#111;--hl:#e6e6e6;--sb:#f6f6f6;--st:#111;--bg:#f7f7f7;--p:#fff;--p2:#fff;--t:#161616;--m:#6d6d6d;--l:#e6e6e6;--a:#111;--at:#fff;--h:#f0f0f0;--sel:#ececec;--chip:#efefef;--logo:#111}
+[data-theme=mono-dark]{--hd:#131313;--ht:#f2f2f2;--hl:#262626;--sb:#1b1b1b;--st:#eee;--bg:#101010;--p:#151515;--p2:#121212;--t:#eee;--m:#9a9a9a;--l:#262626;--a:#f2f2f2;--at:#111;--h:#1e1e1e;--sel:#262626;--chip:#222;--logo:#f2f2f2}
+body{font-family:'Be Vietnam Pro',system-ui,Arial,sans-serif;background:var(--bg);color:var(--t);font-size:var(--fs,14px);line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+#app{display:flex;flex-direction:column;height:100%}
+.main{flex:1;overflow:auto;padding:22px 28px;min-width:0}
+.main h2{margin:0 0 4px;font-size:1.35em;font-weight:600}
+.sub{color:var(--m);margin:0 0 18px}
+.card{background:var(--p);border:1px solid var(--l);border-radius:8px;padding:16px;margin-bottom:16px}
+.card h3{margin:0 0 10px;font-size:1em;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.f{display:flex;flex-direction:column;gap:3px;font-size:.92em}
+.f>span{color:var(--m)}
+input[type=text],input:not([type]),select,textarea{background:var(--bg);border:1px solid var(--l);border-radius:6px;padding:7px 9px;width:100%}
+.ck{display:flex;gap:8px;align-items:center;padding:4px 0}
+.lock{color:var(--m);font-size:.9em;padding:4px 0}
+table{border-collapse:collapse;width:100%}
+td,th{text-align:left;padding:7px 8px;border-bottom:1px solid var(--l);font-weight:400;vertical-align:middle}
+th{color:var(--m);font-size:.9em}
+.chip{display:inline-block;padding:1px 9px;border-radius:99px;background:var(--h);font-size:.85em}
+.sigbox{background:#fff;color:#222;border:1px solid var(--l);border-radius:8px;padding:16px;overflow-x:auto}
+.themes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.th{border:2px solid var(--l);border-radius:8px;padding:0;background:none;text-align:left;overflow:hidden}
+.th.on{border-color:var(--a)}
+.th i{display:block;height:64px;position:relative}
+.th i::before{content:"";position:absolute;left:0;top:0;bottom:0;width:30%;background:var(--s)}
+.th i::after{content:"";position:absolute;left:38%;right:8%;top:14px;height:8px;border-radius:4px;background:var(--c);box-shadow:0 16px 0 var(--c),0 32px 0 var(--c)}
+.th span{display:block;padding:6px 10px;color:var(--t)}
+
+.btn{border:1px solid var(--l);background:var(--p);color:var(--t);border-radius:6px;padding:7px 14px}
+.btn.pri{background:var(--a);color:var(--at);border-color:var(--a)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 18px;background:var(--hd);color:var(--ht);border-bottom:1px solid var(--hl);flex:none}
+.brand{display:flex;align-items:center;gap:10px;min-width:230px}
+.brand svg{width:40px;height:34px;fill:var(--logo);flex:none}
+.brand b{font-weight:600;font-size:1.15em;display:block;line-height:1.15}.brand small{opacity:.8;font-size:.78em}
+.srch{flex:1;position:relative;max-width:640px;margin:0 auto 0 12px}
+.hd .srch input{background:var(--sb);color:var(--st);border:1px solid var(--hl);padding:9px 60px 9px 12px;border-radius:8px}
+.srch kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:.75em;color:var(--m);border:1px solid var(--l);border-radius:4px;padding:0 6px}
+.hd select.hs{background:var(--sb);color:var(--st);border:1px solid var(--hl);width:auto;padding:8px 10px}
+.ic2{background:none;border:1px solid transparent;color:var(--ht);font-size:1.2em;border-radius:6px;padding:4px 9px}
+.ic2:hover{border-color:var(--hl)}
+.usr{display:flex;align-items:center;gap:10px}.usr small{display:block;opacity:.75;font-size:.8em}.usr b{font-weight:500;display:block;line-height:1.2}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex:none;font-weight:600;font-size:.85em;background:var(--a);color:var(--at)}
+.wrap{flex:1;display:flex;min-height:0}
+.nav{width:250px;flex:none;background:var(--p2);border-right:1px solid var(--l);padding:14px 10px;overflow:auto}
+.nav .newbtn{width:100%;padding:11px;margin-bottom:12px;font-weight:500;border-radius:8px}
+.nav h4{margin:16px 10px 4px;font-size:.78em;font-weight:500;color:var(--m);text-transform:uppercase}
+.nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer}
+.nav a:hover{background:var(--h)}.nav a.on{background:var(--sel);font-weight:500;box-shadow:inset 3px 0 0 var(--a)}
+.nav .gl{width:18px;text-align:center;color:var(--m)}.nav a.on .gl{color:var(--a)}
+.nav em{margin-left:auto;font-style:normal;background:var(--chip);border-radius:99px;padding:0 8px;font-size:.85em}
+.area{flex:1;display:flex;min-width:0}
+.area.bottom{flex-direction:column}.area.bottom .lst{width:auto;height:46%;border-right:0;border-bottom:1px solid var(--l)}
+.area.off .det{display:none}.area.off.cm .det{display:block;flex:1}.area.off.cm .lst{display:none}.cmp h2{margin:0 0 10px;font-size:1.3em}.cmp .f{margin-bottom:8px}.area.off .lst{width:100%;flex:1}
+.lst{width:410px;flex:none;display:flex;flex-direction:column;background:var(--p);border-right:1px solid var(--l);min-height:0}
+.lh{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 16px 6px}.lh h3{margin:0;font-size:1.4em;font-weight:600}.lh small,.lh span{color:var(--m)}
+.mvsel{display:none}
+.chips{display:flex;gap:8px;padding:6px 16px}
+.chips button,.fl select{border:1px solid var(--l);background:var(--p);color:var(--t);border-radius:8px;padding:5px 12px}
+.chips button.on{background:var(--a);color:var(--at);border-color:var(--a)}
+.fl{display:flex;gap:8px;padding:6px 16px 10px;flex-wrap:wrap}.fl select{width:auto;padding:5px 8px}
+.rows{overflow:auto;flex:1;border-top:1px solid var(--l)}
+.row{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--l);cursor:pointer}
+.row:hover{background:var(--h)}.row.on{background:var(--sel);box-shadow:inset 3px 0 0 var(--a)}
+.compact .row{padding:6px 16px}.compact .sn{display:none}
+.rc{min-width:0;flex:1}.r1,.r4{display:flex;gap:8px;align-items:center}.r1 span{margin-left:auto;color:var(--m);font-size:.85em;flex:none}
+.r2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sn{color:var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.92em}
+.un{font-weight:600}.r4{margin-top:4px;flex-wrap:wrap}.r4 .ow{margin-left:auto;color:var(--m);font-size:.85em}
+.stc{display:inline-flex;align-items:center;border-radius:6px;padding:0 9px;font-size:.82em;background:var(--chip)}
+.stc::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,#888);margin-right:6px}
+.sNew{--c:#2f80ed}.sInprogress{--c:#27ae60}.sWaiting{--c:#e2a021}.sDone{--c:#8a94a6}
+.pjc{border-radius:6px;padding:0 9px;font-size:.82em;background:var(--chip);color:var(--a)}
+.det{flex:1;overflow:auto;padding:18px 26px;min-width:0}
+.dh{display:flex;gap:12px;align-items:flex-start}.dh h2{margin:0;flex:1;font-size:1.35em;font-weight:600;line-height:1.3}
+.ib{display:flex;gap:6px}.ic{border:1px solid var(--l);background:var(--p);color:var(--t);border-radius:8px;width:36px;height:36px;font-size:1.05em}
+.back{display:none}
+.tags{display:flex;gap:8px;margin:10px 0}.tg{border-radius:6px;padding:1px 10px;font-size:.85em;background:var(--chip)}.tg.pj{color:var(--a)}
+.c2{border:1px solid var(--l);background:var(--p);border-radius:10px;padding:14px}
+.sh{display:flex;gap:14px;align-items:center}.sh .av{width:48px;height:48px}.sh .tm{margin-left:auto;color:var(--m);font-size:.9em;text-align:right}
+.aud{display:flex;gap:10px;align-items:center;background:var(--chip);border:1px solid var(--l);border-radius:8px;padding:9px 14px;margin:12px 0;font-size:.9em}
+.ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;border:1px solid var(--l);background:var(--p);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.ctl label{display:block;color:var(--m);font-size:.8em;text-transform:uppercase;margin-bottom:4px}
+.cc{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border-radius:99px;padding:2px 4px 2px 10px;margin:0 6px 4px 0}.cc button{background:none;border:0;color:var(--m)}
+.ctl select{width:auto;max-width:100%}
+.msg{white-space:pre-wrap;line-height:1.7;margin:16px 0}
+.ab{display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--l);padding-top:14px}
+.ab .btn{padding:10px 18px}
+.emp{display:grid;place-items:center;height:100%;color:var(--m)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:16px;z-index:5}
+.modal>div{background:var(--p);color:var(--t);width:min(720px,100%);max-height:94%;overflow:auto;border-radius:12px;padding:18px;border:1px solid var(--l)}
+.modal h2{margin:0 0 8px}.modal .f{margin-bottom:8px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--a);color:var(--at);padding:10px 16px;border-radius:8px;z-index:9;display:flex;gap:14px;align-items:center}
+.toast button{background:none;border:0;color:inherit;text-decoration:underline}
+.nav.set a.back2{color:var(--m)}
+@media(max-width:900px){.brand{min-width:0}.brand small,.usr div,.srch kbd{display:none}.srch{margin:0}
+.nav{display:none}.nav.set{display:flex;width:auto;overflow-x:auto;padding:6px;border-right:0;border-bottom:1px solid var(--l)}.nav.set h4{display:none}.nav.set a{white-space:nowrap}
+.wrap.sw{flex-direction:column}.area{flex-direction:column}.lst{width:100%;border-right:0;flex:1}.det{display:none;padding:14px}
+.wrap.mob .lst{display:none}.wrap.mob .det{display:block}.back{display:inline-block;border:0;background:none;color:var(--t);font-size:1.4em;padding:0}
+.mvsel{display:block;width:auto;margin:0 16px 6px}.hd{flex-wrap:wrap}.hd select.hs{padding:6px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const LOGO="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAADCBAMAAADQqLFZAAAAMFBMVEX///////7+//76+/vv8PHR1NiztbmVmZ9Wb5E4RlkLRpcLRpYLRpQKRpYJQpALCws5BxJ0AAAMVElEQVR42u2bXWwcVxWAvzuzdpKWxmPHqBSl9nhtighpGf8FqGiziZ2k4qUhjqEgqgZoAy1IVIiW0PAQiYIEBLX8CBEnoUFCIEgcGSGhNo6T5cVAE9sDooikjr2tBDHU9o7Tum0S7wwPsxvvOus9s+4FCeH74tmdu/ebc+4555577hiWm7amIvbbYgkd/AEvwjCxaDTznluFcV7oRR+uaZfw7Dd+H3246m3TqdLSDyYjDWRE6jX7QGka68+iEbdztTDKaJ9GXKxNEK6hB424zvsFb1r1O404c4NglsahcY242i+W1mWwbgB9OGvntDC1A0mNuNkOwVDWHkUjbstdmrwgEi7WKXnBr9CHU233l7ZLY1VSIy7YKnjBzKGURlzlvcJod56yNOJ21gkxYOC0pw9XsdMtreu1R8sQTsR1CF5gjvZ5+nDmVsHsGk6UlRqVxqnaBwRVleMFIq6qWwiX5mFXH07N7hC8YN1J9OGC7tslL0hqxMXaBFXVHUUjrk1IGox/JTXiDClcNhxVGnExIWnghtPpMnGlsujdpb0geO2Qiz7pKjYJuvzQABpxHXeXxsX6T2vExbZKXtCPRlyr5AU39GnEqW2SF+z3NOIqpKThhlNoxIlJw6E/a8SJ4XL9WV8jTtpjGf1LMJRFcWLSUN+/FNpidZWb/zpc+inXvcfTJ50lJQ3q0JJoi+BmN0lJwwAacd13S16Q1IgTvWDtWTTixKRhsk8jTolJw0FLI04Ml6tGlkgrljxYH66b1po6l5ZuVthjpctNnUtL13FXaVxtNnU23zciTGFaxilDShrW5iqlt31UkMU/4XqSdG33l8YZb8t6QWZgwy6BV/95Sbrg/YIXqP25q1dOCE/GFicpmEqFVJhdN79WnHpZkO4vtmSZW4SkwcjbY/lSRcWWHMGQwqU6w1toC3HmRuEHa/MkUrbQeS4lSXeHMMLqvBGMujI6F8U1S+oI8pTd4UnzLOFqykgKlFSAV2eluZuWlhblzPvsvULfdSMSbkSqWr02j+uWEu2TSSlm3vRTKTDtdt2oifb35TyzvUuassls0veB3wjB9fKH5RXhzLAj4KpzKYYgXMMPoqx3maFodllxb+k131h1uswyTqlmSYaiiqUYS8bNdgm6LJpiLBknlnGLVueWijOXVpdQS8S9e1DYkb3nnWiUbqu0I/uupVG6ij8IuNvvcTVKJ3nBq4tU55aGi1CXQB9OiXWJM30acYZ09tvQX17loXST6xK3oFE6uS6BRlyFWJc4pRMn1iUGRjTiJC8I1i9+mLEEUxGThlV3ok86Uz7MQCdOPszQiROP9EodZpSNq+gShFt/Eo04MWnoT2rEvcXDjHJxYnXuxj6NOLE6N7MfjTixOnfnkKcRJ7wwFrwqlHHLw0lvQKgPnUUjruOu0ptb42SfRpzoBeIbEOXgVOsDQg/xDYhycNY2MVymNOJmJS+QDzMMfV6AOfA7jbjYTkG4W48GGnGdwlpw6cZfow8nbiCb9wcacU2fFDpEOfuNjFPbZt5C0lAuTlVoeXk4Ki6QDrajnf0akb1AUFW0s19DkxcISUOZONELFt9jLQXXJKwFl9ZF+v+AqDhpLVAnk9FMIFrSkDDiJTtkHkcjrvtuwemu9GnEqasPCz0yLLflttyW23L7H2/XV/zamxnNJqhbGgheTAKYO/xegNj2Y2EyseOVcD3dYkEwHfaPfQQgOGaEJ45+L92vJIUFKNZi0TbtAmxtBjaQBFQ8TMhzq6wRXx0OVGMD8Zpj8zd9iOcWpfhVKXnosKbHVSvAu5qZHvNUux2qYXvBfoCa8MIL0mlPNWZPUNPpdDqNSqfT6bQHeNLyatiZg+bOOsDcHFzoxexq6DgcZkcFm/BA2eECn+nB3BxvdFzA78l9BeaD0xFSI8MaJTOiHGi0pnoh0+utsQFShp2/b07nve+Q6R8O9VE40FgEnMKDcWVBs38YIHM8PJifzjufJ2ZNefn0M6mahQNv9pOREj8PgjEP054KP095TQBXvTxtqmDMq83/0XEjsXBSpqPkmQEWzB11Mcgqw08pACtfm5sD1ytwIb9AWMC0pqLhmnLGkFPG6XCaTuVp0wo4na9cMoXCQnPgRsFlUmt22gDV13a+QYjL06ZpTeIXvhuz0OQbir8YdJ2bH/9SY/WLSbDmcdm/7sas7WNYf8T3CqwjrQDVHQYTiNnnoqW1V4fjNWEkWdiGE04qp+gUvnfrddKpeC7DjQepiFuS/oFx1Vas67w2G4IUjBf81AIIwqiy+NQVS9pHx7rrnWK93Y32PwCw1W5QKpFcEOqDntJ2WXzD5R9XFvOGroKsHQxnjTFmqerqaiuUaN5WxZCy2JYk41mMbMxJ2IxbqE0VumTNmryf2Gk5pBTBtdcfAx8LX9luzqZzN0cSdjgxRwG23ZEf1c7JIaVYiG64FieyhhGzJ6/ZZqjNLH9c5YeZlBxSiuDSyoGY5eGnzDAMdsyPNJeyAcOaXoiLNfiuHFKK4MZVC7TgwQDtDtDu5M3DuMrDzcfJWJc1GiGkFJk736vtVHE/CXMjze21qHiQV3wa3gQYWXEz3q2A0Q01lt9HLqoEx2L2VHgh4zIjm1rhHMBAtV0DTOYZ2VyqHjblVOXVgWXEAT98rVHFw1yFNWvCC+ufkiMM2Q1M9QFkenc0EIwdC+NF6Hvjq6EqZ/On6u1UugpIv+iGnbIhNk3BRcnEz9jMyflLv2SR0k4tp87/xy3ru2bL9bda30IRr7hl3rPxqwBs6LIm9wKxL9+0l/vueAKIPWb7z+VqX+/+FMx9jftu38ueuf0An7vxuwCfq3uC928/kOK+O55gz9u+Vhp/7+WwxPdMEARfB2LBm/DAGwAPB0HwRi79+mAQBLPwxTfgmdcAzGdmAXgqSPDBy3Z466nXoqniE7uu9PC4A7Aiuxep/BE9rPxMQZKYP9AuM3uVKCFNcVwsceVjjzxamV0Swu8+zjc/ew8P5tL0bXyj4NVa89pzPVY2ztzV05f5EU8CEApkOG/u5bmHn85qc+40kwXHZ9uu5IwsZpdbz4wzAFf37QE48KkEgPHoD4EfX9e1M/vXyRwJ1+M3VybOFd4Scbdd6QPCzUGm0kkDBheK9VzZD7NAzD48+ZUvAPhHWs8V3IrqNWEydnXfk9nPlQcOHDjw6CKTsmsqZdoAQfJBt0xlguNeS+bcXB+1G/heYb8rT/EVgEZuqa90UoD65ZFE7tbN3ZFw5yttF+wQ9+wKG/BpoofKXQuWHH9POOYGdoPTBzCXdQV/D09Fs8wxOqFiX5hxzR3ZB/hHHrzlW591WWSFc+jp4cth/32Pl+EI3d0Oc0ce6oo9wd4wn3AB/OSKx1Zve/pyX/E5efT1np6ns47+fBl+V/mrn1lkTlT+/OC+K9ks5TkAfsEjDz/LIkc9Jt8ZGnKN0CkHynLzSuDYkcpdfDtrYaEHXHmE3Vw+VnyYFlx4vtLJan9RnLngszV68uQLE/gX0y/88knAeP2C608MDgLuxN/PfOvZa8/5+oW/gT08yDt+P8h7/zLgMTM762IPDgYrR17wsIcHsX8/GHVpcuRnW27L7b/WmmxMh6bOzZgOZgtmpwNtnTZt2UXd7HTA7AzXwE4g1gm0Yjpg2tfud2B2dmA4gpvXOHTY1MSrMVowHIx4G0ZLg008WyLtiLdDY7wGoC2+HXNHvAsaE4YFrQ6Y8XYHIx5HxRsxbCmqrMEC60QvGGxScH4G/INJgsM1ALG6npcScP44gP0TaMwcNm2IY4G9Bqzzbgv86yBzPQEFxYliOMswq4A1NlyiCqgNYxRkwsLQJKfsUG3g3d2HPZRxbYJXAWP1JYAzBhgtEMtEiJkvGR54ra1ARxVQY4HR6sCWKgDlgYHX6ACcakpQlWIceCkBRvZf1magtgVaxiLgUps8sIYuQLomDZx/ycEf9qB6FCCwwMe68DLA+p/EmbFRwIgNhmHZAFUwNQz1yQi4cTsJDLmwuvpa1XAoBamw7FXL5lQ4HLwLRarF2J6Cq5c8Es8/YwPtPmSGia2OsgDVBYDX3QVTXhK4rd7F6E7AcC3A3Mu765M5E5j59BQXanfelALGocr1Y3i3OcPw9odQxkP2dWXO64L8BSZWTKxc+ca4qvIuclFZoxOBYsxb9Xd1ESBljU5ghVv1lPVbgj/d3AurLk5UTay6GKiLWKMuykqPK8ubnlkxsRzK/mPt3xHkAuPWgNWcAAAAAElFTkSuQmCC";
+const ADMIN={company:"Công ty Cổ phần Sonadezi Long Thành",addr:"Đường số 5, Khu công nghiệp An Phước, xã An Phước, Thành phố Đồng Nai",web:"szl.com.vn",color:"#0D4794"};
+const MB=[["kinhdoanh","Kinh doanh – Tổng hợp","kinhdoanh@szl.com.vn"],["personal","Hộp thư cá nhân","oanhtht.szl@outlook.com.vn"]];
+const USERS=["Tạ Hồng Tố Oanh","Nguyễn Văn A","Minh"],ME=USERS[0];
+const THEMES=[["brand-dark","Brand Dark","#0b0f17","#0c121c","#1d6bff"],["brand-blue","Brand Blue (SZL)","#f4f7fc","#0b3a96","#bcd0f5"],["brand-soft","Brand Soft","#f7f9fd","#e4ebf7","#1a62e0"],["mono-light","Light Mono","#f7f7f7","#e6e6e6","#111111"],["mono-dark","Dark Mono","#101010","#1c1c1c","#eeeeee"]];
+const ST=["New","In progress","Waiting","Done"];
+const NOW=Date.now(),HR=36e5;
+const mk=(id,from,addr,sub,body,o)=>Object.assign({id,from,addr,to:"kinhdoanh@szl.com.vn",sub,body,folder:"inbox",mb:"kd",owner:"",collab:[],st:"New",proj:"",ts:NOW-HR*3,read:false,star:false,audit:[]},o);
+const mkDef=()=>({theme:"brand-blue",lang:"vi",density:"comfortable",pane:"right",fs:14,avatar:true,
+name:"Tạ Hồng Tố Oanh",title:"Nhân viên Kinh Doanh",dept:"Bộ phận Kinh Doanh Tổng Hợp",phone:"0908 809 906",email:"oanhtht.szl@outlook.com.vn",display:"Tạ Hồng Tố Oanh - Sonadezi Long Thành",defSender:"kinhdoanh",
+sigs:[{id:1,name:"Sonadezi – VI",lang:"vi",short:false},{id:2,name:"Rút gọn",lang:"vi",short:true},{id:3,name:"Sonadezi – EN",lang:"en",short:false}],selSig:1,
+sm:{kinhdoanh:{n:"1",r:"2"},personal:{n:"1",r:"2"}},autoN:true,autoR:true,autoF:true,
+font:"Arial",size:14,line:1.5,color:"#222222",replyPos:"top",cc:"",bcc:"",chkAtt:true,confirmExt:true,delay:10,
+mbDefault:"kinhdoanh",showInternal:true,autoAssign:true,replyOwner:"keep",view:"all",
+notif:{n:true,a:true,m:true,d:true,c:true,desk:true,mail:false,snd:false},
+rules:[{f:"Domain người gửi",v:"@kanadevia.vn",a:"Gắn Project",av:"Kanadevia Project"},{f:"Gửi đến chứa kinhdoanh@szl.com.vn và Tiêu đề chứa",v:"CCN Long Phước 1",a:"Gắn Project",av:"CCN Long Phước 1"}],
+projects:["Kanadevia Project","Internal Admin","CCN Long Phước 1"],
+mails:[
+mk(1,"Kanadevia Vietnam","contact@kanadevia.vn","Phản hồi về việc sắp xếp buổi làm việc và khảo sát e-methanol","Kính gửi Công ty Cổ phần Sonadezi Long Thành,\n\nChúng tôi xin gửi thông tin về phương án nghiên cứu dự án thí điểm sản xuất e-methanol và mong muốn sắp xếp buổi làm việc, khảo sát tại khu công nghiệp.\n\nTrân trọng,\nKanadevia Việt Nam",{owner:ME,collab:["Nguyễn Văn A"],proj:"Kanadevia Project",ts:NOW-HR}),
+mk(2,"Điện Lực Long Thành","dl@evn.vn","Phối hợp tuyên truyền cài đặt App EVN","Đề nghị Quý Công ty phối hợp tuyên truyền cài đặt ứng dụng cho các doanh nghiệp trong khu công nghiệp.",{owner:USERS[1],st:"In progress",proj:"Internal Admin",ts:NOW-HR*20,read:true}),
+mk(3,"Sở TN&MT Đồng Nai","stnmt@dongnai.gov.vn","Cập nhật hồ sơ môi trường dự án","Kính gửi Quý Công ty, chúng tôi xin đề nghị cập nhật hồ sơ môi trường của dự án.",{owner:USERS[1],st:"Waiting",ts:NOW-HR*52,read:true}),
+mk(4,"Bộ Công Thương","bct@moit.gov.vn","Thông báo về hội nghị ngành năng lượng","Kính mời Quý đơn vị tham dự hội nghị ngành năng lượng vào tháng tới.",{ts:NOW-HR*54}),
+mk(5,"Petrovietnam","pv@pvn.vn","Trao đổi hợp tác chuỗi cung ứng","Chúng tôi quan tâm đến khả năng hợp tác chuỗi cung ứng tại khu công nghiệp.",{owner:USERS[1],st:"Done",ts:NOW-HR*80,read:true}),
+mk(6,"UBND tỉnh Đồng Nai","ubnd@dongnai.gov.vn","Về việc cung cấp thông tin quy hoạch","Đề nghị Quý Công ty gửi bổ sung tài liệu quy hoạch.",{owner:ME,st:"Done",ts:NOW-HR*82,read:true}),
+mk(7,"Kansai Paint Vietnam","sales@kansai.vn","Báo giá sơn công nghiệp","Kính gửi Quý Công ty, chúng tôi xin gửi báo giá sơn công nghiệp.",{st:"Waiting",ts:NOW-HR*100}),
+mk(8,"Vietcombank Đồng Nai","dn@vcb.com.vn","Xác nhận bảo lãnh thực hiện dịch vụ","Đề nghị xác nhận thông tin bảo lãnh thực hiện dịch vụ.",{ts:NOW-HR*105}),
+mk(9,"Tạ Hồng Tố Oanh - Sonadezi Long Thành","kinhdoanh@szl.com.vn","Re: Hỏi giá thuê đất CCN Long Phước 1","Kính gửi Quý Công ty, chúng tôi xin gửi bảng giá đính kèm.",{folder:"sent",by:ME,to:"mua@abc.com",read:true,ts:NOW-HR*30,audit:[{w:ME,a:"Gửi thư",ts:NOW-HR*30}]}),
+mk(10,"Tạ Hồng Tố Oanh - Sonadezi Long Thành","kinhdoanh@szl.com.vn","Lịch tiếp đoàn tuần sau","Nháp: Kính gửi anh/chị...",{folder:"drafts",by:ME,to:"",read:true,ts:NOW-HR*6})]});
+let S;try{S=Object.assign(mkDef(),JSON.parse(localStorage.getItem("hub2")||"{}"))}catch(e){S=mkDef()}
+const save=()=>{try{localStorage.setItem("hub2",JSON.stringify(S))}catch(e){}};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const get=(o,p)=>p.split(".").reduce((a,k)=>a&&a[k],o);
+const set=(o,p,v)=>{const k=p.split(".");const l=k.pop();k.reduce((a,x)=>a[x],o)[l]=v};
+const sigOf=id=>S.sigs.find(s=>String(s.id)===String(id))||S.sigs[0];
+function sigHTML(sg){const L=sg.lang==="en",c=ADMIN.color,f="font-family:Arial,sans-serif;font-size:13px;color:#333";
+if(sg.short)return `<div style="${f}"><b style="color:${c}">${esc(S.name)}</b> | ${esc(S.phone)} | ${esc(S.email)} | ${ADMIN.web}</div>`;
+return `<table cellpadding=0 cellspacing=0 style="${f};border-collapse:collapse"><tr><td style="padding-right:16px"><img src="${LOGO}" width=90 alt=""></td><td style="border-left:2px solid ${c};padding-left:16px;line-height:1.6"><div style="font-size:16px;font-weight:bold;color:${c}">${esc(S.name)}</div><div style="color:#555">${esc(S.title)} – ${esc(S.dept)}</div><div style="font-weight:bold;margin-bottom:5px">${ADMIN.company}</div><div><b style="color:${c}">${L?"Tel":"Điện thoại"}:</b> ${esc(S.phone)}</div><div><b style="color:${c}">Email:</b> ${esc(S.email)}</div><div><b style="color:${c}">Website:</b> ${ADMIN.web}</div><div><b style="color:${c}">${L?"Address":"Địa chỉ"}:</b> ${ADMIN.addr}</div></td></tr></table>`}
+const F=(k,l,type="text",o=[])=>{const v=get(S,k);
+if(type==="check")return `<label class=ck><input type=checkbox data-k="${k}" ${v?"checked":""}>${l}</label>`;
+let i;if(type==="select")i=`<select data-k="${k}">${o.map(x=>`<option value="${x[0]}" ${String(v)===String(x[0])?"selected":""}>${esc(x[1])}</option>`).join("")}</select>`;
+else if(type==="range")i=`<input type=range data-k="${k}" data-n=1 min="${o[0]}" max="${o[1]}" step="${o[2]||1}" value="${v}"> <small>${v}</small>`;
+else if(type==="color")i=`<input type=color data-k="${k}" value="${v}">`;
+else i=`<input data-k="${k}" value="${esc(v)}">`;
+return `<label class=f><span>${l}</span>${i}</label>`};
+const YN=[[true,"Có"],[false,"Không"]];
+const sigOpts=()=>S.sigs.map(s=>[s.id,s.name]);
+const NAV=[["Cá nhân",[["account","Tài khoản"],["sig","Chữ ký"],["compose","Soạn thư"],["notif","Thông báo"]]],["Mail Hub",[["shared","Hộp thư dùng chung"],["rules","Quy tắc & bộ lọc"],["ui","Giao diện"]]],["Hệ thống (Admin)",[["users","Người dùng & phân quyền"],["mailbox","Mailbox"],["proj","Project & Status"],["audit","Audit & bảo mật"]]]];
+const head=(t,s)=>`<h2>${t}</h2><p class=sub>${s}</p>`;
+const PAGES={
+account:()=>head("Tài khoản & danh tính","Thông tin này tự điền vào chữ ký và tên hiển thị khi gửi.")+`<div class=card><div class=grid>${F("name","Họ tên")}${F("title","Chức danh")}${F("dept","Bộ phận")}${F("phone","Điện thoại")}${F("email","Email cá nhân (nhận trả lời)")}${F("display","Tên hiển thị khi gửi mail")}${F("defSender","Địa chỉ gửi mặc định","select",MB.map(m=>[m[0],m[1]+" <"+m[2]+">"]))}</div></div><div class=card><h3>Hộp thư dùng chung bạn được phép dùng</h3><div class=lock>🔒 Do Admin cấp quyền, bạn không tự thêm được.</div>${MB.filter(m=>m[0]!=="personal").map(m=>`<div class=ck>✓ ${m[1]} &lt;${m[2]}&gt; <span class=chip>Gửi + Nhận</span></div>`).join("")}</div><div class=card>${F("avatar","Hiện ảnh đại diện (chữ cái đầu tên)","check")}</div>`,
+sig:()=>{const sg=sigOf(S.selSig);return head("Chữ ký email","Tạo nhiều chữ ký, chọn chữ ký mặc định cho từng địa chỉ gửi.")+`<div class=grid style="grid-template-columns:minmax(260px,1fr) minmax(300px,1.4fr);align-items:start"><div><div class=card><h3>Danh sách chữ ký</h3>${S.sigs.map(s=>`<div class=ck><button class="btn ${s.id==sg.id?"on":""}" data-act=selSig data-id=${s.id}>${esc(s.name)}</button>${S.sigs.length>1?`<button class=btn data-act=delSig data-id=${s.id}>Xóa</button>`:""}</div>`).join("")}<button class="btn pri" data-act=addSig>Thêm chữ ký</button></div>
+<div class=card><h3>Chỉnh chữ ký đang chọn</h3><label class=f><span>Tên chữ ký</span><input data-sg=name value="${esc(sg.name)}"></label><label class=f><span>Ngôn ngữ</span><select data-sg=lang><option value=vi ${sg.lang=="vi"?"selected":""}>Tiếng Việt</option><option value=en ${sg.lang=="en"?"selected":""}>English</option></select></label><label class=f><span>Kiểu</span><select data-sg=short><option value=0 ${!sg.short?"selected":""}>Đầy đủ (có logo)</option><option value=1 ${sg.short?"selected":""}>Rút gọn (một dòng)</option></select></label><div class=lock>🔒 Khóa bởi Admin: logo, tên công ty, địa chỉ, font Arial, màu thương hiệu ${ADMIN.color}.</div></div></div>
+<div><div class=card><h3>Xem trước trực tiếp</h3><div class=sigbox id=sigprev>${sigHTML(sg)}</div></div></div></div>
+<div class=card><h3>Chữ ký mặc định theo địa chỉ gửi</h3><table><tr><th>Địa chỉ gửi</th><th>Email mới</th><th>Reply / Forward</th></tr>${MB.map(m=>`<tr><td>${m[1]}<br><small>${m[2]}</small></td><td>${F("sm."+m[0]+".n","","select",sigOpts())}</td><td>${F("sm."+m[0]+".r","","select",sigOpts())}</td></tr>`).join("")}</table>
+<h3 style="margin-top:14px">Tự động chèn khi</h3>${F("autoN","Email mới","check")}${F("autoR","Reply","check")}${F("autoF","Forward","check")}</div>`},
+compose:()=>head("Soạn thư","Cách thư của bạn trông và được gửi đi.")+`<div class=card><h3>Định dạng</h3><div class=grid>${F("font","Font mặc định","select",["Arial","Calibri","Times New Roman","Tahoma"].map(x=>[x,x]))}${F("size","Cỡ chữ","range",[11,18])}${F("line","Khoảng cách dòng","range",[1,2,.1])}${F("color","Màu chữ","color")}</div></div><div class=card><h3>Trả lời và gửi</h3><div class=grid>${F("replyPos","Reply viết","select",[["top","Trên nội dung cũ"],["bottom","Dưới nội dung cũ"]])}${F("cc","Tự động CC")}${F("bcc","Tự động BCC")}${F("delay","Delay Send (giây) – cho phép Hoàn tác","range",[0,30,5])}</div>${F("chkAtt","Nhắc khi nhắc đến “đính kèm” mà chưa có file","check")}${F("confirmExt","Hỏi xác nhận trước khi gửi ra ngoài công ty","check")}</div>`,
+shared:()=>head("Hộp thư dùng chung","Cách bạn làm việc trên mailbox của cả bộ phận.")+`<div class=card><div class=grid>${F("mbDefault","Mở app vào hộp thư","select",MB.map(m=>[m[0],m[1]]))}${F("view","Hiển thị email","select",[["all","Tất cả"],["rel","Liên quan đến tôi"],["own","Tôi phụ trách"]])}${F("replyOwner","Khi reply","select",[["keep","Giữ người phụ trách hiện tại"],["me","Chuyển cho người reply"]])}</div>${F("showInternal","Người ngoài chỉ thấy địa chỉ phòng; nội bộ thấy tên người gửi","check")}${F("autoAssign","Mở email chưa ai nhận thì tự giao cho tôi","check")}</div><div class=card><h3>Quy trình trạng thái mặc định</h3><span class=chip>Mới</span> → <span class=chip>Đang xử lý</span> → <span class=chip>Chờ phản hồi</span> → <span class=chip>Hoàn tất</span><div class=lock>Admin đổi được trong Project & Status.</div></div>`,
+ui:()=>head("Giao diện","Bấm vào một theme để đổi ngay.")+`<div class=card><div class=themes>${[["light-mono","Light Mono","#f6f6f6","#fff","#cfcfcf"],["dark-mono","Dark Mono","#141414","#1c1c1c","#444"],["brand-light","Sonadezi Brand Light","#eef3fa","#0D4794","#b7c9e4"],["brand-dark","Sonadezi Brand Dark","#0a1626","#4c8fe0","#27456f"]].map(t=>`<button class="th ${S.theme==t[0]?"on":""}" data-act=theme data-id=${t[0]}><i style="background:${t[2]};--s:${t[3]};--c:${t[4]}"></i><span>${t[1]}</span></button>`).join("")}</div></div><div class=card><div class=grid>${F("density","Mật độ danh sách","select",[["comfortable","Thoải mái"],["compact","Gọn"]])}${F("pane","Khung đọc thư","select",[["right","Bên phải"],["bottom","Bên dưới"],["off","Tắt"]])}${F("fs","Cỡ chữ giao diện","range",[12,18])}</div>${F("avatar","Hiện avatar","check")}</div>`,
+notif:()=>head("Thông báo","Chọn những gì bạn muốn được báo.")+`<div class=card>${[["n","Mail mới"],["a","Mail được giao cho tôi"],["m","Mail nhắc đến tôi"],["d","Mail sắp hoặc quá hạn xử lý"],["c","Khách hàng trả lời"]].map(x=>F("notif."+x[0],x[1],"check")).join("")}</div><div class=card><h3>Cách báo</h3>${[["desk","Thông báo trên màn hình"],["mail","Thông báo qua email"],["snd","Âm thanh"]].map(x=>F("notif."+x[0],x[1],"check")).join("")}</div>`,
+rules:()=>head("Quy tắc & bộ lọc","Tự gắn Project, giao việc, chuyển thư mục hay đánh dấu ưu tiên.")+`<div class=card><table><tr><th>Nếu</th><th>Thì</th><th></th></tr>${S.rules.map((r,i)=>`<tr><td>${esc(r.f)} = <b>${esc(r.v)}</b></td><td>${esc(r.a)}: <b>${esc(r.av)}</b></td><td><button class=btn data-act=delRule data-id=${i}>Xóa</button></td></tr>`).join("")||"<tr><td colspan=3>Chưa có quy tắc. Thêm quy tắc đầu tiên bên dưới.</td></tr>"}</table></div><div class=card><h3>Thêm quy tắc</h3><div class=grid><label class=f><span>Điều kiện</span><select id=rf><option>Domain người gửi</option><option>Gửi đến chứa</option><option>Tiêu đề chứa</option></select></label><label class=f><span>Giá trị</span><input id=rv></label><label class=f><span>Hành động</span><select id=ra><option>Gắn Project</option><option>Giao cho</option><option>Chuyển thư mục</option><option>Đánh dấu ưu tiên</option></select></label><label class=f><span>Giá trị hành động</span><input id=rav></label></div><p><button class="btn pri" data-act=addRule>Thêm quy tắc</button></p></div>`,
+users:()=>head("Người dùng & phân quyền","Chỉ Admin thấy và chỉnh phần này.")+`<div class=card><table><tr><th>Người dùng</th><th>Vai trò</th><th>Được gửi từ</th><th>Được giao việc</th></tr>${[["Tạ Hồng Tố Oanh","Nhân viên"],["Minh","Nhân viên"],["Trưởng bộ phận","Quản lý"],["Quản trị IT","Admin"]].map(u=>`<tr><td>${u[0]}</td><td><span class=chip>${u[1]}</span></td><td>kinhdoanh@szl.com.vn</td><td>${u[1]=="Admin"?"Không":"Có"}</td></tr>`).join("")}</table></div>`,
+mailbox:()=>head("Mailbox","Tạo hộp thư dùng chung và chọn ai được dùng.")+`<div class=card><table><tr><th>Hộp thư</th><th>Thành viên</th><th>Mẫu chữ ký chuẩn</th></tr><tr><td>kinhdoanh@szl.com.vn</td><td>4 người</td><td>Sonadezi – VI / Rút gọn / EN</td></tr></table><div class=lock>🔒 Mẫu chữ ký chuẩn khóa logo, font, màu theo Brand Guideline.</div></div>`,
+proj:()=>head("Project & Status","Danh mục dùng chung cho cả công ty.")+`<div class=card><h3>Project</h3><span class=chip>Kanadevia</span> <span class=chip>CCN Long Phước 1</span></div><div class=card><h3>Status</h3><span class=chip>Mới</span> → <span class=chip>Đang xử lý</span> → <span class=chip>Chờ phản hồi</span> → <span class=chip>Hoàn tất</span></div>`,
+audit:()=>head("Audit & bảo mật","Ai làm gì, lúc nào.")+`<div class=card><table><tr><th>Thời gian</th><th>Người</th><th>Hành động</th></tr><tr><td>09:20</td><td>Oanh</td><td>Nhận xử lý “Đề xuất dự án e-methanol”</td></tr><tr><td>Hôm qua</td><td>Minh</td><td>Gửi mail từ kinhdoanh@szl.com.vn</td></tr><tr><td>Thứ hai</td><td>Admin</td><td>Đổi quyền gửi của Minh</td></tr></table><p class=lock>Dữ liệu mẫu. Thời gian lưu trữ thư và quy tắc toàn hệ thống đặt ở đây khi có máy chủ thật.</p></div>`};
+
+const T={vi:{new:"Viết email mới",fav:"Yêu thích",shared:"Hộp thư chia sẻ",proj:"Dự án",inbox:"Hộp thư đến",sent:"Thư đã gửi",drafts:"Thư nháp",assigned:"Giao cho tôi",pending:"Đang chờ",archive:"Lưu trữ",deleted:"Đã xóa",all:"Tất cả",mine:"Của tôi",unas:"Chưa giao",owner:"Người phụ trách",status:"Trạng thái",project:"Dự án",date:"Ngày",today:"Hôm nay",week:"7 ngày qua",search:"Tìm kiếm email, người gửi...",reply:"Trả lời",fwd:"Chuyển tiếp",assign:"Nhận xử lý",done:"Hoàn tất",collab:"Cộng tác viên",add:"Thêm",audit:"Nhật ký nội bộ",of:"của",none:"Không có thư nào ở đây.",pick:"Chọn một thư để đọc",sub:"Hộp thư chia sẻ – Kinh Doanh Tổng Hợp",undo:"Hoàn tác",send:"Gửi",cancel:"Hủy",draft:"Lưu nháp",att:"Đính kèm",unassigned:"Chưa giao",yest:"Hôm qua",st:{New:"Mới","In progress":"Đang xử lý",Waiting:"Chờ phản hồi",Done:"Hoàn tất"},sending:"Sẽ gửi sau",ext:"Thư này gửi ra ngoài công ty. Bạn chắc chắn muốn gửi?",noatt:"Nội dung nhắc đến file đính kèm nhưng chưa có file nào. Vẫn gửi?",noto:"Điền người nhận trước khi gửi.",sentok:"Đã gửi (bản thử, chưa gửi ra máy chủ thật).",more:"Khác",star:"Gắn sao",unread:"Đánh dấu chưa đọc",menuDel:"Xóa",edit:"Soạn tiếp",to:"Đến",subj:"Tiêu đề",body:"Nội dung",from:"Từ",newmail:"Thư mới",test:"Nhận thư thử"},
+en:{new:"New message",fav:"Favorites",shared:"Shared mailbox",proj:"Projects",inbox:"Inbox",sent:"Sent Items",drafts:"Drafts",assigned:"Assigned to me",pending:"Pending",archive:"Archive",deleted:"Deleted Items",all:"All",mine:"Mine",unas:"Unassigned",owner:"Owner",status:"Status",project:"Project",date:"Date",today:"Today",week:"Last 7 days",search:"Search emails or senders...",reply:"Reply",fwd:"Forward",assign:"Assign to me",done:"Mark done",collab:"Collaborators",add:"Add",audit:"Internal Audit Log",of:"of",none:"No messages here.",pick:"Select a message to read",sub:"Shared mailbox · Kinh Doanh Tổng Hợp",undo:"Undo",send:"Send",cancel:"Cancel",draft:"Save draft",att:"Attach",unassigned:"Unassigned",yest:"Yesterday",st:{New:"New","In progress":"In progress",Waiting:"Waiting",Done:"Done"},sending:"Sending in",ext:"This message goes outside the company. Send anyway?",noatt:"You mention an attachment but none is attached. Send anyway?",noto:"Add a recipient first.",sentok:"Sent (test build, not sent to a real server).",more:"More",star:"Star",unread:"Mark unread",menuDel:"Delete",edit:"Continue",to:"To",subj:"Subject",body:"Message",from:"From",newmail:"New message",test:"Simulate incoming mail"}};
+const t=k=>T[S.lang][k],stn=s=>T[S.lang].st[s];
+let view=S.mbDefault==="personal"?"f-in":"s-in",sel=null,ui={chip:S.view==="own"?"mine":"all",owner:"",status:"",project:"",date:"",q:""},menu=false,mob=false,page="mail",modal=null,toast=null,iv=null,pend=null,tm=null,ii=0;
+const pad=n=>String(n).padStart(2,"0");
+const day=x=>new Date(x).setHours(0,0,0,0);
+function fmtT(ts){const d=new Date(ts),df=(day(Date.now())-day(ts))/864e5;return df<=0?pad(d.getHours())+":"+pad(d.getMinutes()):df===1?t("yest"):pad(d.getDate())+"/"+pad(d.getMonth()+1)}
+const fmtF=ts=>{const d=new Date(ts);return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear()+" "+pad(d.getHours())+":"+pad(d.getMinutes())};
+const ini=n=>{const w=n.trim().split(/\s+/);return(w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase()};
+const PAL=["#1d6bff","#7c4dff","#e67e22","#16a085","#c0392b","#2c7fb8"];
+const col=n=>PAL[[...n].reduce((a,c)=>a+c.charCodeAt(0),0)%PAL.length];
+const avt=n=>n===ME?`<div class=av>${ini(n)}</div>`:`<div class=av style="background:${col(n)};color:#fff">${ini(n)}</div>`;
+const MAIL=()=>S.mails.find(m=>m.id===sel);
+const log=(m,a)=>m.audit.push({w:ME,a,ts:Date.now()});
+function NAVS(){const L=t;const F=[["f-in",L("inbox"),m=>m.folder==="inbox"&&m.owner===ME,"▣"],["f-se",L("sent"),m=>m.folder==="sent"&&m.by===ME,"➤"],["f-dr",L("drafts"),m=>m.folder==="drafts"&&m.by===ME,"✎"]];
+const H=[["s-in",L("inbox"),m=>m.folder==="inbox"&&m.mb==="kd","▣"],["s-as",L("assigned"),m=>m.folder==="inbox"&&m.owner===ME,"☺"],["s-pe",L("pending"),m=>m.folder==="inbox"&&m.st==="Waiting","◷"],["s-se",L("sent"),m=>m.folder==="sent"&&m.mb==="kd","➤"],["s-dr",L("drafts"),m=>m.folder==="drafts"&&m.mb==="kd","✎"],["s-ar",L("archive"),m=>m.folder==="archive","▤"],["s-de",L("deleted"),m=>m.folder==="deleted","⌫"]];
+const P=S.projects.map(p=>["p:"+p,p,m=>m.proj===p&&m.folder!=="deleted","●"]);return{F,H,P}}
+const ALL=()=>{const x=NAVS();return[...x.F,...x.H,...x.P]};
+const cur=()=>ALL().find(n=>n[0]===view)||ALL()[0];
+function cnt(n){const a=S.mails.filter(n[2]);return["f-dr","s-dr"].includes(n[0])?a.length:["f-se","s-se","s-ar","s-de"].includes(n[0])?0:a.filter(m=>!m.read).length}
+const navItem=n=>{const c=cnt(n);return `<a class="${view===n[0]?"on":""}" data-act=nav data-id="${esc(n[0])}"><span class=gl>${n[3]}</span>${esc(n[1])}${c?`<em>${c}</em>`:""}</a>`};
+function base(){let a;if(ui.q){const q=ui.q.toLowerCase();a=S.mails.filter(m=>m.folder!=="deleted"&&(m.from+" "+m.sub+" "+m.body+" "+m.addr).toLowerCase().includes(q))}else a=S.mails.filter(cur()[2]);
+if(ui.owner)a=a.filter(m=>ui.owner==="-"?!m.owner:m.owner===ui.owner);if(ui.status)a=a.filter(m=>m.st===ui.status);if(ui.project)a=a.filter(m=>m.proj===ui.project);
+if(ui.date==="today")a=a.filter(m=>day(m.ts)===day(Date.now()));if(ui.date==="week")a=a.filter(m=>m.ts>Date.now()-7*864e5);return a.sort((x,y)=>y.ts-x.ts)}
+const header=()=>`<div class=hd><div class=brand><svg viewBox="0 0 40 36"><polygon points="9,2 36,2 28,16 1,16"/><polygon points="12,20 39,20 31,34 4,34"/></svg><div><b>Sonadezi Mail Hub</b><small>Kết nối công việc – Kiến tạo giá trị</small></div></div><div class=srch><input id=q placeholder="${esc(t("search"))}" value="${esc(ui.q)}"><kbd>Ctrl K</kbd></div><select class=hs data-k=lang><option value=vi ${S.lang==="vi"?"selected":""}>VI</option><option value=en ${S.lang==="en"?"selected":""}>EN</option></select><select class=hs data-k=theme>${THEMES.map(x=>`<option value="${x[0]}" ${S.theme===x[0]?"selected":""}>${x[1]}</option>`).join("")}</select><button class=ic2 data-act=test title="${esc(t("test"))}">⟳</button><button class=ic2 data-act=gear title="Cài đặt">⚙</button><div class=usr>${avt(ME)}<div><b>${ME}</b><small>Sonadezi</small></div></div></div>`;
+function mailNav(){const x=NAVS();return `<div class=nav><button class="btn pri newbtn" data-act=compose>＋ ${t("new")}</button><h4>${t("fav")}</h4>${x.F.map(navItem).join("")}<h4>${t("shared")}</h4>${x.H.map(navItem).join("")}<h4>${t("proj")}</h4>${x.P.map(navItem).join("")}</div>`}
+const setNav=()=>`<div class="nav set"><a class=back2 data-act=mailpage>← ${t("inbox")}</a>${NAV.map(g=>`<h4>${g[0]}</h4>${g[1].map(n=>`<a class="${page===n[0]?"on":""}" data-act=page data-id=${n[0]}>${n[1]}</a>`).join("")}`).join("")}</div>`;
+function row(m){const own=m.owner?`<span class=ow>${S.avatar?ini(m.owner)+" ":""}${esc(m.owner)}</span>`:`<span class=ow>${t("unassigned")}</span>`;
+const ch=["inbox","archive","deleted"].includes(m.folder)?`<span class="stc s${m.st.replace(" ","")}">${stn(m.st)}</span>${m.proj?`<span class=pjc>${esc(m.proj)}</span>`:""}${own}`:"";
+return `<div class="row ${m.id===sel?"on":""}" data-act=open data-id=${m.id}>${S.avatar?avt(m.from):""}<div class=rc><div class=r1><b class="${m.read?"":"un"}">${esc(m.from)}</b><span>${m.star?"★ ":""}${fmtT(m.ts)}</span></div><div class="r2 ${m.read?"":"un"}">${esc(m.sub)}</div><div class=sn>${esc(m.body.replace(/\s+/g," "))}</div><div class=r4>${ch}</div></div></div>`}
+function mailArea(){const bs=(()=>{const q=ui;const sv={...ui};ui.owner=ui.status=ui.project=ui.date="";const a=base();Object.assign(ui,sv);return a})();const L=base();
+const a2=ui.chip==="mine"?L.filter(m=>m.owner===ME):ui.chip==="un"?L.filter(m=>!m.owner):L;
+const nm=bs.filter(m=>m.owner===ME).length,nu=bs.filter(m=>!m.owner).length;
+const o=(v,l,c)=>`<option value="${esc(v)}" ${c===v?"selected":""}>${esc(l)}</option>`;
+return `<div class="area ${S.pane} ${S.density} ${modal?"cm":""}"><div class=lst><div class=lh><div><h3>${esc(cur()[1])}</h3><small>${t("sub")}</small></div><span>${a2.length?"1–"+a2.length:0} ${t("of")} ${a2.length}</span></div>
+<select class=mvsel data-f=view>${ALL().map(n=>o(n[0],n[1],view)).join("")}</select>
+<div class=chips><button class="${ui.chip==="all"?"on":""}" data-act=chip data-id=all>${t("all")} (${bs.length})</button><button class="${ui.chip==="mine"?"on":""}" data-act=chip data-id=mine>${t("mine")} (${nm})</button><button class="${ui.chip==="un"?"on":""}" data-act=chip data-id=un>${t("unas")} (${nu})</button></div>
+<div class=fl><select data-f=fOwner>${o("",t("owner"),ui.owner)}${USERS.map(u=>o(u,u,ui.owner)).join("")}${o("-",t("unassigned"),ui.owner)}</select><select data-f=fStatus>${o("",t("status"),ui.status)}${ST.map(s=>o(s,stn(s),ui.status)).join("")}</select><select data-f=fProject>${o("",t("project"),ui.project)}${S.projects.map(p=>o(p,p,ui.project)).join("")}</select><select data-f=fDate>${o("",t("date"),ui.date)}${o("today",t("today"),ui.date)}${o("week",t("week"),ui.date)}</select></div>
+<div class=rows>${a2.map(row).join("")||`<p class=sub style="padding:16px">${t("none")}</p>`}</div></div><div class=det>${modal?composePane():detail()}</div></div>`}
+function detail(){const m=MAIL();if(!m)return `<div class=emp>${t("pick")}</div>`;
+const isIn=["inbox","archive","deleted"].includes(m.folder),la=m.audit[m.audit.length-1];
+const aud=m.folder==="sent"&&m.mb==="kd"&&S.showInternal?`<b>${t("audit")}:</b> Sent by ${esc(m.by)} (Sales Dept). External client only sees the shared department address.`:la?`<b>${t("audit")}:</b> ${esc(la.a)} – ${esc(la.w)}, ${fmtF(la.ts)}`:`<b>${t("audit")}:</b> —`;
+const fl={inbox:t("inbox"),sent:t("sent"),drafts:t("drafts"),archive:t("archive"),deleted:t("deleted")}[m.folder];
+const co=USERS.filter(u=>!m.collab.includes(u));
+return `<div class=dh><button class=back data-act=back>←</button><h2>${esc(m.sub)}</h2>${isIn?`<div class=ib><button class=ic data-act=reply title="${t("reply")}">↩</button><button class=ic data-act=fwd title="${t("fwd")}">↪</button><button class=ic data-act=more title="${t("more")}">⋯</button></div>`:""}</div>
+<div class=tags><span class=tg>${fl}</span>${m.proj?`<span class="tg pj">${esc(m.proj)}</span>`:""}</div>
+<div class=c2><div class=sh>${avt(m.from)}<div><b>${esc(m.from)}</b><div>${esc(m.addr)}</div><div style="color:var(--m)">${t("to")}: ${esc(m.to||"—")}</div></div><div class=tm>${fmtF(m.ts)}</div></div></div>
+<div class=aud>ⓘ <span>${aud}</span></div>
+${isIn?`<div class=ctl><div><label>${t("owner")}</label><select data-f=owner><option value="">${t("unassigned")}</option>${USERS.map(u=>`<option ${m.owner===u?"selected":""}>${u}</option>`).join("")}</select></div><div><label>${t("collab")}</label>${m.collab.map(c=>`<span class=cc>${esc(c)}<button data-act=rmc data-id="${esc(c)}">×</button></span>`).join("")}${co.length?`<select data-f=addc><option value="">＋ ${t("add")}</option>${co.map(u=>`<option>${u}</option>`).join("")}</select>`:""}</div><div><label>${t("status")}</label><select data-f=status>${ST.map(s=>`<option value="${s}" ${m.st===s?"selected":""}>${stn(s)}</option>`).join("")}</select></div></div>`:""}
+<div class=msg>${esc(m.body)}</div>
+${isIn?`<div class=ab><button class="btn pri" data-act=reply>↩ ${t("reply")}</button><button class=btn data-act=fwd>↪ ${t("fwd")}</button><button class=btn data-act=assignme>☺ ${t("assign")}</button><button class=btn data-act=done>✓ ${t("done")}</button><button class=btn data-act=more>⋯</button></div>${menu?`<div class=ab style="border:0"><button class=btn data-act=archive>${t("archive")}</button><button class=btn data-act=del>${t("menuDel")}</button><button class=btn data-act=unread>${t("unread")}</button><button class=btn data-act=star>${m.star?"★":"☆"} ${t("star")}</button></div>`:""}`:m.folder==="drafts"?`<div class=ab><button class="btn pri" data-act=editdraft>${t("edit")}</button></div>`:""}`}
+function sigFor(){const k=modal.mode==="new"?"n":"r",on=modal.mode==="new"?S.autoN:modal.mode==="reply"?S.autoR:S.autoF;return on?sigHTML(sigOf(S.sm[modal.from][k])):""}
+function composePane(){const mb=MB.find(b=>b[0]===modal.from);
+return `<div class=cmp><h2>${t("newmail")}</h2><label class=f><span>${t("from")}</span><select data-c=from>${MB.map(b=>`<option value=${b[0]} ${modal.from===b[0]?"selected":""}>${esc(S.display)} &lt;${b[2]}&gt;</option>`).join("")}</select></label>
+<label class=f><span>${t("to")}</span><input data-c=to value="${esc(modal.to)}"></label><label class=f><span>Cc</span><input data-c=cc value="${esc(modal.cc)}"></label><label class=f><span>${t("subj")}</span><input data-c=sub value="${esc(modal.sub)}"></label>
+<label class=f><span>${t("body")}</span><textarea data-c=body rows=8 style="font-family:${S.font};font-size:${S.size}px;line-height:${S.line};color:${S.color}">${esc(modal.body)}</textarea></label>
+<div class=sigbox style="margin:8px 0">${sigFor()||"<small>—</small>"}</div>
+<p><label class=btn style="display:inline-block">${t("att")}<input type=file multiple data-f=att hidden></label> <small id=attl>${esc(modal.att.join(", "))}</small></p>
+<p><button class="btn pri" data-act=send>${t("send")}</button> <button class=btn data-act=draft>${t("draft")}</button> <button class=btn data-act=close>${t("cancel")}</button></p></div>`}
+function render(){const d=document.documentElement;d.dataset.theme=S.theme;d.style.setProperty("--fs",S.fs+"px");const r0=document.querySelector(".rows"),sc=r0?r0.scrollTop:0,inSet=page!=="mail";
+$("app").innerHTML=header()+`<div class="wrap ${inSet?"sw":""} ${mob?"mob":""}">${inSet?setNav()+`<div class=main>${PAGES[page]()}</div>`:mailNav()+mailArea()}</div>`+(toast?`<div class=toast><span id=tt>${toast.t}</span>${toast.undo?`<button data-act=undo>${t("undo")}</button>`:""}</div>`:"");
+const r1=document.querySelector(".rows");if(r1)r1.scrollTop=sc}
+PAGES.ui=()=>head("Giao diện","Bấm vào một chế độ màu để đổi ngay.")+`<div class=card><div class=themes>${THEMES.map(x=>`<button class="th ${S.theme===x[0]?"on":""}" data-act=theme data-id=${x[0]}><i style="background:${x[2]};--s:${x[3]};--c:${x[4]}"></i><span>${x[1]}</span></button>`).join("")}</div></div><div class=card><div class=grid>${F("density","Mật độ danh sách","select",[["comfortable","Thoải mái"],["compact","Gọn"]])}${F("pane","Khung đọc thư","select",[["right","Bên phải"],["bottom","Bên dưới"],["off","Tắt"]])}${F("fs","Cỡ chữ giao diện","range",[12,18])}</div>${F("avatar","Hiện avatar","check")}</div><div class=card><h3>Dữ liệu thử</h3><div class=lock>Thư và cài đặt đang lưu trong trình duyệt này.</div><button class=btn data-act=reset>Đặt lại dữ liệu mẫu</button></div>`;
+PAGES.proj=()=>head("Project & Status","Danh mục dùng chung cho cả công ty.")+`<div class=card><h3>Project</h3>${S.projects.map(p=>`<span class=chip>${esc(p)}</span> `).join("")}<div class=grid style="margin-top:12px"><label class=f><span>Thêm project mới</span><input id=np></label></div><p><button class="btn pri" data-act=addProj>Thêm project</button></p></div><div class=card><h3>Status</h3>${ST.map(s=>`<span class=chip>${stn(s)}</span>`).join(" → ")}</div>`;
+function applyRules(m){S.rules.forEach(r=>{const v=r.v.toLowerCase();let h=false;
+if(r.f.startsWith("Domain"))h=m.addr.toLowerCase().endsWith(v);else if(r.f.startsWith("Gửi đến chứa kinhdoanh"))h=m.to.includes("kinhdoanh@szl.com.vn")&&m.sub.toLowerCase().includes(v);else if(r.f.startsWith("Gửi đến"))h=m.to.toLowerCase().includes(v);else if(r.f.startsWith("Tiêu đề"))h=m.sub.toLowerCase().includes(v);
+if(!h)return;if(r.a==="Gắn Project"){m.proj=r.av;if(!S.projects.includes(r.av))S.projects.push(r.av)}else if(r.a==="Giao cho"){const u=USERS.find(x=>x.toLowerCase().includes(r.av.toLowerCase()));if(u)m.owner=u}else if(r.a==="Chuyển thư mục"&&/lưu|archive/i.test(r.av))m.folder="archive";else if(r.a==="Đánh dấu ưu tiên")m.star=true;
+m.audit.push({w:"Quy tắc tự động",a:r.a+": "+r.av,ts:Date.now()})})}
+const INC=[["Công ty TNHH Kanadevia Việt Nam","info@kanadevia.vn","Gửi lịch trình đoàn công tác tháng 11","Chúng tôi xin gửi dự kiến lịch trình và thành phần đoàn công tác."],["Công ty ABC","mua@abc.com","Hỏi giá thuê đất CCN Long Phước 1","Cho chúng tôi xin đơn giá thuê đất và các tiện ích hiện có."],["Sở Công Thương","sct@dongnai.gov.vn","Mời họp triển khai kế hoạch","Kính mời Quý Công ty cử đại diện tham dự."]];
+const nid=()=>Math.max(0,...S.mails.map(m=>m.id))+1;
+function showToast(x,undo,ms){toast={t:x,undo};render();clearTimeout(tm);if(ms)tm=setTimeout(()=>{toast=null;render()},ms)}
+function openCompose(mode){const m=mode==="new"?null:MAIL();let body="",sub="",to="";
+if(m){const q=(S.lang==="vi"?"Vào ":"On ")+fmtF(m.ts)+", "+m.from+" <"+m.addr+">:\n"+m.body.split("\n").map(l=>"> "+l).join("\n");body=S.replyPos==="top"||mode==="fwd"?"\n\n"+q:q+"\n\n";sub=(mode==="reply"?"Re: ":"Fwd: ")+m.sub.replace(/^(Re|Fwd): /,"");to=mode==="reply"?m.addr:""}
+modal={mode,from:S.defSender,to,cc:S.cc||"",sub,body,att:[],ref:m?m.id:null};mob=true}
+function finalize(sn){const mb=MB.find(b=>b[0]===sn.from);const r=sn.ref?S.mails.find(x=>x.id===sn.ref):null;
+S.mails.push({id:nid(),from:S.display,addr:mb[2],to:sn.to,sub:sn.sub||"(không tiêu đề)",body:sn.body,folder:"sent",mb:sn.from==="kinhdoanh"?"kd":"me",by:ME,owner:"",collab:[],st:"Done",proj:r?r.proj:"",ts:Date.now(),read:true,star:false,audit:[{w:ME,a:"Gửi thư",ts:Date.now()}]});
+if(r){if(r.st==="New"||r.st==="In progress")r.st="Waiting";if(S.replyOwner==="me")r.owner=ME;log(r,"Đã trả lời")}
+save();showToast(t("sentok"),0,3500)}
+function stashDraft(){if(!modal||!(modal.to.trim()||modal.sub.trim()||(modal.mode==="new"&&modal.body.trim())))return false;const mb=MB.find(x=>x[0]===modal.from);S.mails.push({id:nid(),from:S.display,addr:mb[2],to:modal.to,sub:modal.sub||"(không tiêu đề)",body:modal.body,folder:"drafts",mb:modal.from==="kinhdoanh"?"kd":"me",by:ME,owner:"",collab:[],st:"New",proj:"",ts:Date.now(),read:true,star:false,audit:[]});save();return true}
+function startSend(sn){let n=S.delay;const f=x=>t("sending")+" "+x+"s";pend=sn;toast={t:f(n),undo:true};render();clearInterval(iv);iv=setInterval(()=>{n--;if(n<=0){clearInterval(iv);toast=null;finalize(sn);return}const e=$("tt");if(e)e.textContent=f(n)},1000)}
+document.addEventListener("input",e=>{const t_=e.target;
+if(t_.id==="q"){ui.q=t_.value;const p=t_.selectionStart;render();const q=$("q");q.focus();q.setSelectionRange(p,p);return}
+if(t_.dataset.c){modal[t_.dataset.c]=t_.value;if(t_.dataset.c==="from")render();return}
+if(t_.dataset.sg){const sg=sigOf(S.selSig);sg[t_.dataset.sg]=t_.dataset.sg==="short"?t_.value==="1":t_.value;save();const p=$("sigprev");if(p)p.innerHTML=sigHTML(sg);return}
+const k=t_.dataset.k;if(!k)return;let v=t_.type==="checkbox"?t_.checked:t_.dataset.n?Number(t_.value):t_.value;if(v==="true")v=true;if(v==="false")v=false;
+set(S,k,v);save();if(t_.dataset.n&&t_.nextElementSibling)t_.nextElementSibling.textContent=v;
+if(["name","title","dept","phone","email"].includes(k)){const p=$("sigprev");if(p)p.innerHTML=sigHTML(sigOf(S.selSig))}
+if(k==="fs")document.documentElement.style.setProperty("--fs",v+"px");else if(t_.tagName==="SELECT"&&["density","pane","theme","lang"].includes(k))render()});
+document.addEventListener("change",e=>{const t_=e.target,f=t_.dataset.f;if(!f)return;
+if(f==="att"){modal.att=[...t_.files].map(x=>x.name);$("attl").textContent=modal.att.join(", ");return}
+if(f==="fOwner")ui.owner=t_.value;else if(f==="fStatus")ui.status=t_.value;else if(f==="fProject")ui.project=t_.value;else if(f==="fDate")ui.date=t_.value;else if(f==="view")view=t_.value;
+else{const m=MAIL();if(!m)return;if(f==="owner"){m.owner=t_.value;log(m,"Giao cho "+(t_.value||"(bỏ giao)"))}else if(f==="status"){m.st=t_.value;log(m,"Trạng thái → "+t_.value)}else if(f==="addc"&&t_.value){m.collab.push(t_.value);log(m,"Thêm cộng tác viên "+t_.value)}save()}
+render()});
+document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();const q=$("q");if(q)q.focus()}else if(e.key==="Escape"&&modal){modal=null;render()}});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,id=b.dataset.id,m=MAIL();
+const leave=(a==="nav"||a==="open")&&modal;if(leave){const sv=stashDraft();modal=null;if(sv)showToast(t("draft")+" ✓",0,2200)}
+if(a==="nav"){view=id;sel=null;ui.q="";ui.owner=ui.status=ui.project=ui.date="";mob=false;menu=false}
+else if(a==="chip")ui.chip=id;
+else if(a==="open"){sel=Number(id);const x=MAIL();x.read=true;mob=true;menu=false;if(S.autoAssign&&!x.owner&&["inbox"].includes(x.folder)){x.owner=ME;if(x.st==="New")x.st="In progress";log(x,"Tự nhận xử lý khi mở")}save()}
+else if(a==="back")mob=false;
+else if(a==="reply"||a==="fwd"){openCompose(a)}
+else if(a==="compose"){if(!modal)openCompose("new")}
+else if(a==="more")menu=!menu;
+else if(a==="assignme"){m.owner=ME;if(m.st==="New")m.st="In progress";log(m,"Nhận xử lý");save()}
+else if(a==="done"){m.st="Done";log(m,"Hoàn tất");save()}
+else if(a==="archive"){m.folder="archive";log(m,"Lưu trữ");save()}
+else if(a==="del"){if(m.folder==="deleted"){S.mails=S.mails.filter(x=>x.id!==m.id);sel=null}else{m.folder="deleted";log(m,"Xóa")}save()}
+else if(a==="unread"){m.read=false;save()}
+else if(a==="star"){m.star=!m.star;save()}
+else if(a==="rmc"){m.collab=m.collab.filter(c=>c!==id);log(m,"Bỏ cộng tác viên "+id);save()}
+else if(a==="editdraft"){modal={mode:"new",from:m.mb==="kd"?"kinhdoanh":"personal",to:m.to,cc:S.cc||"",sub:m.sub,body:m.body,att:[],ref:null};S.mails=S.mails.filter(x=>x.id!==m.id);sel=null;save()}
+else if(a==="close"){modal=null;mob=false}
+else if(a==="draft"){stashDraft();modal=null;mob=false;showToast(t("draft")+" ✓",0,2200);return}
+else if(a==="send"){const rc=(modal.to+","+modal.cc).split(/[,;]/).map(s=>s.trim()).filter(Boolean);
+if(!rc.length)return showToast(t("noto"),0,2500);
+if(S.confirmExt&&rc.some(x=>!x.toLowerCase().endsWith("@szl.com.vn"))&&!confirm(t("ext")))return;
+if(S.chkAtt&&/đính kèm|attach/i.test(modal.body)&&!modal.att.length&&!confirm(t("noatt")))return;
+const sn=modal;modal=null;mob=false;if(S.delay>0){startSend(sn)}else finalize(sn);return}
+else if(a==="undo"){clearInterval(iv);toast=null;modal=pend;mob=true}
+else if(a==="test"){const x=INC[ii++%INC.length];const n=mk(nid(),x[0],x[1],x[2],x[3],{ts:Date.now()});applyRules(n);S.mails.push(n);save();showToast((S.lang==="vi"?"Có thư mới từ ":"New mail from ")+x[0]+(n.proj?" → "+n.proj:""),0,3500);return}
+else if(a==="gear"){page="account"}else if(a==="mailpage")page="mail";else if(a==="page")page=id;
+else if(a==="theme"){S.theme=id;save()}
+else if(a==="selSig")S.selSig=Number(id);
+else if(a==="addSig"){const n=Math.max(...S.sigs.map(s=>s.id))+1;S.sigs.push({id:n,name:"Chữ ký mới "+n,lang:"vi",short:false});S.selSig=n;save()}
+else if(a==="delSig"){S.sigs=S.sigs.filter(s=>s.id!==Number(id));S.selSig=S.sigs[0].id;for(const k in S.sm)for(const j in S.sm[k])if(!S.sigs.find(s=>String(s.id)===S.sm[k][j]))S.sm[k][j]=String(S.sigs[0].id);save()}
+else if(a==="addRule"){const v=$("rv").value.trim(),av=$("rav").value.trim();if(!v||!av)return showToast("Điền đủ giá trị điều kiện và hành động.",0,2500);S.rules.push({f:$("rf").value,v,a:$("ra").value,av});save()}
+else if(a==="delRule"){S.rules.splice(Number(id),1);save()}
+else if(a==="addProj"){const v=$("np").value.trim();if(v&&!S.projects.includes(v)){S.projects.push(v);save()}}
+else if(a==="reset"){S=mkDef();save();view="s-in";sel=null}
+render()});
+render();
+</script>
+</body>
+</html>
